@@ -1,0 +1,166 @@
+/* Modern gradient background */
+body {
+  padding: 0;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #1a1a2e 100%);
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#unity-container {
+  position: absolute;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+#unity-container.unity-desktop {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 960px;
+}
+
+#unity-container.unity-mobile {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+#unity-canvas {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  display: block;
+  border-radius: 16px 16px 0 0;
+}
+
+.unity-mobile #unity-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Loading bar with glassmorphism */
+#unity-loading-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  text-align: center;
+  min-width: 300px;
+}
+
+/* Hide Unity logo */
+#unity-logo {
+  display: none;
+}
+
+/* Modern progress bar container */
+#unity-progress-bar-empty {
+  width: 300px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;
+}
+
+/* Animated progress bar */
+#unity-progress-bar-full {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-size: 200% 100%;
+  border-radius: 12px;
+  transition: width 0.3s ease;
+  animation: shimmer 2s infinite;
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Footer styling */
+#unity-footer {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 16px 16px;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.unity-mobile #unity-footer {
+  display: none;
+}
+
+/* Hide Unity logo in footer */
+#unity-logo-title-footer {
+  display: none;
+}
+
+/* Game title styling */
+#unity-build-title {
+  float: left;
+  line-height: 26px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Modern fullscreen button */
+#unity-fullscreen-button {
+  cursor: pointer;
+  float: right;
+  width: 26px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+#unity-fullscreen-button svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#unity-fullscreen-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Warning styling */
+#unity-warning {
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  transform: translate(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  display: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #1a1a2e;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 80%;
+}
