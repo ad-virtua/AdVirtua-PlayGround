@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Unity Web Player | ChaseTag</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <link rel="stylesheet" href="TemplateData/style.css" />
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -16,18 +16,27 @@
           <div id="unity-progress-bar-full"></div>
         </div>
       </div>
-      <div id="unity-warning"> </div>
+      <div id="unity-warning"></div>
       <div id="unity-footer">
         <div id="unity-logo-title-footer"></div>
         <div id="unity-build-title">ChaseTag</div>
         <div id="unity-fullscreen-button">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="color: white"
+          >
+            <path
+              d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+            ></path>
           </svg>
         </div>
-      </div>
-      <div id="screenshot-info">
-        Press <kbd>F6</kbd> to capture screenshot
       </div>
     </div>
     <script>
@@ -42,15 +51,18 @@
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+          warningBanner.style.display = warningBanner.children.length
+            ? "block"
+            : "none";
         }
-        var div = document.createElement('div');
+        var div = document.createElement("div");
         div.innerHTML = msg;
         warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        if (type == "error") div.style = "background: red; padding: 10px;";
         else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
+          if (type == "warning")
+            div.style = "background: yellow; padding: 10px;";
+          setTimeout(function () {
             warningBanner.removeChild(div);
             updateBannerVisibility();
           }, 5000);
@@ -97,18 +109,17 @@
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
 
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+        var meta = document.createElement("meta");
+        meta.name = "viewport";
+        meta.content =
+          "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
+        document.getElementsByTagName("head")[0].appendChild(meta);
         document.querySelector("#unity-container").className = "unity-mobile";
         canvas.className = "unity-mobile";
 
         // To lower canvas resolution on mobile devices to gain some
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
-
-
       } else {
         // Desktop style: Render the game canvas in a responsive container with 16:9 aspect ratio
         // Set initial canvas resolution based on container size
@@ -136,7 +147,9 @@
           }
           attempts++;
           if (attempts < MAX_ATTEMPTS) {
-            alert("パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回");
+            alert(
+              "パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回"
+            );
           }
         }
         alert("アクセスが拒否されました");
@@ -151,21 +164,28 @@
         script.src = loaderUrl;
         script.onload = () => {
           createUnityInstance(canvas, config, (progress) => {
-            document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
-                }).then((unityInstance) => {
-                  document.querySelector("#unity-loading-bar").style.display = "none";
-                  document.querySelector("#unity-fullscreen-button").onclick = () => {
+            document.querySelector("#unity-progress-bar-full").style.width =
+              100 * progress + "%";
+          })
+            .then((unityInstance) => {
+              document.querySelector("#unity-progress-bar-full").style.width =
+                "100%";
+              setTimeout(() => {
+                document.querySelector("#unity-loading-bar").style.display =
+                  "none";
+                document.querySelector("#unity-fullscreen-button").onclick =
+                  () => {
                     unityInstance.SetFullscreen(1);
                   };
-
-                }).catch((message) => {
-                  alert(message);
-                });
-              };
+              }, 500);
+            })
+            .catch((message) => {
+              alert(message);
+            });
+        };
 
         document.body.appendChild(script);
       }
-
     </script>
 
     <!-- Screenshot capture functionality (F6 key) -->
