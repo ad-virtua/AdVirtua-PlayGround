@@ -1,194 +1,155 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
     <title>Unity Web Player | ChaseTag</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico" />
-    <link rel="stylesheet" href="TemplateData/style.css" />
+    <link rel="stylesheet" href="TemplateData/sub.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
+    <header class="header">
+      <img
+        src="TemplateData/gaora-logo.png"
+        alt="GAORA SPORTS"
+        width="110"
+        height="39"
+        decoding="async"
+      />
+    </header>
+    <main>
+      <div class="main-visual">
+        <img
+          src="TemplateData/main-visual-deco.png"
+          alt=""
+          class="main-visual-deco-image"
+          decoding="async"
+        />
+        <div class="main-visual-game-iframe-container">
+          <iframe
+            src="game.html"
+            frameborder="0"
+            width="960"
+            height="540"
+            allowfullscreen
+            class="main-visual-game-iframe"
+          ></iframe>
         </div>
+        <p class="main-visual-game-description">
+          移動：WASDキー スライディング：Fキー ジャンプ：Spaceキー
+          カメラ移動：マウス
+        </p>
+        <button class="main-visual-fullscreen-button">
+          <img
+            src="TemplateData/fullscreen-icon.png"
+            alt=""
+            width="55"
+            height="55"
+          />全画面表示でプレイ
+        </button>
       </div>
-      <div id="unity-warning"></div>
-      <div id="unity-footer">
-        <div id="unity-logo-title-footer"></div>
-        <div id="unity-build-title">ChaseTag</div>
-        <div id="unity-fullscreen-button">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            style="color: white"
-          >
-            <path
-              d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
-            ></path>
-          </svg>
+      <div class="main-visual-red-triangles"></div>
+      <section class="content">
+        <div>
+          <div class="content-container">
+            <img
+              src="TemplateData/content-container.png"
+              alt=""
+              width="1440"
+              height="1026"
+              class="content-container-image"
+            />
+            <div class="content-box">
+              <h1 class="content-title">
+                <img
+                  src="TemplateData/content-title.png"
+                  alt="チェイスタグとは"
+                />
+              </h1>
+              <h2 class="content-message">
+                障害物だらけの専用コートで行う、20秒勝負の“本気”の1対1鬼ごっこ競技。
+              </h2>
+              <div class="content-bottom">
+                <img
+                  src="TemplateData/content-image.png"
+                  alt=""
+                  class="content-image"
+                />
+                <dl class="content-descriptions">
+                  <div>
+                    <dt class="content-description-title">フィールド</dt>
+                    <dd>
+                      <ul class="content-description-detail-list">
+                        <li>8m×8m の「クアッド」と呼ばれる障害物コート</li>
+                      </ul>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="content-description-title">
+                      ルール (シングルサドンデスチェイスオフ)
+                    </dt>
+                    <dd>
+                      <ul class="content-description-detail-list">
+                        <li>
+                          鬼<span
+                            class="content-description-detail-list-small-text"
+                          >
+                            (チェイサーという)</span
+                          >
+                          と子
+                          <span
+                            class="content-description-detail-list-small-text"
+                            >(イヴェイダーという) </span
+                          >の1対1
+                        </li>
+                        <li>20秒の間、2人がクアッド内で鬼ごっこ</li>
+                        <li>タッチ(タグという)されたら、鬼と子を入れ替え</li>
+                        <li>逃げ切った秒数の多い方が勝ち</li>
+                      </ul>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
+    <footer>
+      <img
+        src="./TemplateData/copyright.png"
+        alt="©COPYRIGHT GAORA INC."
+        class="copy-right"
+      />
+    </footer>
     <script>
-      var canvas = document.querySelector("#unity-canvas");
+      // 全画面表示ボタンのイベントリスナー
+      const fullscreenButton = document.querySelector(
+        ".main-visual-fullscreen-button"
+      );
+      const gameIframe = document.querySelector(".main-visual-game-iframe");
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
-      function unityShowBanner(msg, type) {
-        var warningBanner = document.querySelector("#unity-warning");
-        function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length
-            ? "block"
-            : "none";
+      fullscreenButton.addEventListener("click", () => {
+        if (gameIframe.requestFullscreen) {
+          gameIframe.requestFullscreen();
+        } else if (gameIframe.webkitRequestFullscreen) {
+          // Safari用
+          gameIframe.webkitRequestFullscreen();
+        } else if (gameIframe.mozRequestFullScreen) {
+          // Firefox用
+          gameIframe.mozRequestFullScreen();
+        } else if (gameIframe.msRequestFullscreen) {
+          // IE/Edge用
+          gameIframe.msRequestFullscreen();
         }
-        var div = document.createElement("div");
-        div.innerHTML = msg;
-        warningBanner.appendChild(div);
-        if (type == "error") div.style = "background: red; padding: 10px;";
-        else {
-          if (type == "warning")
-            div.style = "background: yellow; padding: 10px;";
-          setTimeout(function () {
-            warningBanner.removeChild(div);
-            updateBannerVisibility();
-          }, 5000);
-        }
-        updateBannerVisibility();
-      }
-
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Pre.loader.js";
-      var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/Pre.data",
-        frameworkUrl: buildUrl + "/Pre.framework.js",
-        codeUrl: buildUrl + "/Pre.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "YGTCreate",
-        productName: "ChaseTag",
-        productVersion: "0.1.0",
-        showBanner: unityShowBanner,
-        // errorHandler: function(err, url, line) {
-        //    alert("error " + err + " occurred at line " + line);
-        //    // Return 'true' if you handled this error and don't want Unity
-        //    // to process it further, 'false' otherwise.
-        //    return true;
-        // },
-      };
-
-      // By default, Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      config.matchWebGLToCanvasSize = true; // Explicitly enable responsive canvas
-
-      // If you would like all file writes inside Unity Application.persistentDataPath
-      // directory to automatically persist so that the contents are remembered when
-      // the user revisits the site the next time, uncomment the following line:
-      // config.autoSyncPersistentDataPath = true;
-      // This autosyncing is currently not the default behavior to avoid regressing
-      // existing user projects that might rely on the earlier manual
-      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
-      // expected to change.
-
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-
-        var meta = document.createElement("meta");
-        meta.name = "viewport";
-        meta.content =
-          "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes";
-        document.getElementsByTagName("head")[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
-
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
-      } else {
-        // Desktop style: Render the game canvas in a responsive container with 16:9 aspect ratio
-        // Set initial canvas resolution based on container size
-        var container = document.querySelector("#unity-container");
-        var rect = container.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-      }
-
-      // パスワード保護
-      const PASSWORD = "gaora2025"; // ここを任意のパスワードに変更してください
-      const MAX_ATTEMPTS = 3;
-
-      function checkPassword() {
-        let attempts = 0;
-        while (attempts < MAX_ATTEMPTS) {
-          const input = prompt("パスワードを入力してください:");
-          if (input === null) {
-            // キャンセルされた場合
-            alert("アクセスが拒否されました");
-            return false;
-          }
-          if (input === PASSWORD) {
-            return true;
-          }
-          attempts++;
-          if (attempts < MAX_ATTEMPTS) {
-            alert(
-              "パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回"
-            );
-          }
-        }
-        alert("アクセスが拒否されました");
-        return false;
-      }
-
-      // パスワード認証成功後のみUnityをロード
-      if (checkPassword()) {
-        document.querySelector("#unity-loading-bar").style.display = "block";
-
-        var script = document.createElement("script");
-        script.src = loaderUrl;
-        script.onload = () => {
-          createUnityInstance(canvas, config, (progress) => {
-            document.querySelector("#unity-progress-bar-full").style.width =
-              100 * progress + "%";
-          })
-            .then((unityInstance) => {
-              document.querySelector("#unity-progress-bar-full").style.width =
-                "100%";
-              setTimeout(() => {
-                document.querySelector("#unity-loading-bar").style.display =
-                  "none";
-                document.querySelector("#unity-fullscreen-button").onclick =
-                  () => {
-                    unityInstance.SetFullscreen(1);
-                  };
-              }, 500);
-            })
-            .catch((message) => {
-              alert(message);
-            });
-        };
-
-        document.body.appendChild(script);
-      }
+      });
     </script>
-
-    <!-- Screenshot capture functionality (F6 key) -->
-    <script src="TemplateData/screenshot.js"></script>
   </body>
 </html>
