@@ -34,19 +34,21 @@
         />
         <div class="main-visual-game-iframe-container">
           <iframe
+            id="game-iframe"
             src="game.html"
             frameborder="0"
             width="960"
             height="540"
             allowfullscreen
             class="main-visual-game-iframe"
+            title="ChaseTag"
           ></iframe>
         </div>
         <p class="main-visual-game-description">
           移動：WASDキー スライディング：Fキー ジャンプ：Spaceキー
           カメラ移動：マウス
         </p>
-        <button class="main-visual-fullscreen-button">
+        <button id="fullscreen-button" class="main-visual-fullscreen-button">
           <img
             src="TemplateData/fullscreen-icon.png"
             alt=""
@@ -130,26 +132,71 @@
       />
     </footer>
     <script>
-      // 全画面表示ボタンのイベントリスナー
-      const fullscreenButton = document.querySelector(
-        ".main-visual-fullscreen-button"
-      );
-      const gameIframe = document.querySelector(".main-visual-game-iframe");
+      const fullscreenButton = document.getElementById("fullscreen-button");
+      const gameIframe = document.getElementById("game-iframe");
 
-      fullscreenButton.addEventListener("click", () => {
-        if (gameIframe.requestFullscreen) {
-          gameIframe.requestFullscreen();
-        } else if (gameIframe.webkitRequestFullscreen) {
-          // Safari用
-          gameIframe.webkitRequestFullscreen();
-        } else if (gameIframe.mozRequestFullScreen) {
-          // Firefox用
-          gameIframe.mozRequestFullScreen();
-        } else if (gameIframe.msRequestFullscreen) {
-          // IE/Edge用
-          gameIframe.msRequestFullscreen();
+      // iframeにフォーカスを当てる共通関数
+      const focusIframe = () => {
+        setTimeout(() => {
+          gameIframe.focus();
+          try {
+            if (gameIframe.contentWindow) {
+              gameIframe.contentWindow.focus();
+            }
+          } catch (e) {
+            // クロスオリジンの場合はエラーになるが、無視
+          }
+        }, 100);
+      };
+
+      // 全画面表示をリクエストする共通関数
+      const requestFullscreen = async (element) => {
+        if (element.requestFullscreen) {
+          return await element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+          return await element.webkitRequestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+          return await element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+          return await element.msRequestFullscreen();
+        }
+      };
+
+      // 現在の全画面要素を取得する共通関数
+      const getFullscreenElement = () => {
+        return (
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement
+        );
+      };
+
+      // 全画面表示ボタンのイベントリスナー
+      fullscreenButton.addEventListener("click", async () => {
+        try {
+          await requestFullscreen(gameIframe);
+          focusIframe();
+        } catch (error) {
+          console.error("全画面表示に失敗しました:", error);
         }
       });
+
+      // 全画面変更イベントの共通ハンドラー
+      const handleFullscreenChange = () => {
+        if (getFullscreenElement() === gameIframe) {
+          focusIframe();
+        }
+      };
+
+      // 各ブラウザ用の全画面変更イベントリスナー
+      document.addEventListener("fullscreenchange", handleFullscreenChange);
+      document.addEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange
+      );
+      document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+      document.addEventListener("MSFullscreenChange", handleFullscreenChange);
     </script>
   </body>
 </html>
