@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Unity Web Player | ChaseTag</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico" />
-    <link rel="stylesheet" href="TemplateData/sub.css" />
+    <link rel="stylesheet" href="TemplateData/top.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,11 +28,23 @@
     <main>
       <div class="main-visual">
         <img
-          src="TemplateData/main-visual-deco.png"
-          alt=""
-          class="main-visual-deco-image"
-          decoding="async"
+          src="TemplateData/game-play_small.png"
+          alt="ゲームプレイ"
+          class="main-visual-intro u-small-only"
         />
+        <picture>
+          <source
+            srcset="TemplateData/main-visual-deco-image_small.png"
+            media="(max-width: 700px)"
+          />
+          <img
+            src="TemplateData/main-visual-deco.png"
+            alt=""
+            class="main-visual-deco-image"
+            decoding="async"
+          />
+        </picture>
+
         <div class="main-visual-game-iframe-container">
           <iframe
             id="game-iframe"
@@ -43,6 +56,28 @@
             class="main-visual-game-iframe"
             title="ChaseTag"
           ></iframe>
+          <div
+            class="main-visual-game-start-container"
+            id="game-start-container"
+          >
+            <button class="main-visual-game-start-button" id="start-button">
+              タップしてスタート
+            </button>
+            <div class="main-visual-game-comment" id="game-comment">
+              <img
+                src="TemplateData/gaora-mini-icon.png"
+                alt=""
+                width="21"
+                height="23"
+              />
+              ※始める際に横にしてください
+            </div>
+            <img
+              src="TemplateData/game-thumbnail.png"
+              alt=""
+              class="main-visual-game-thumbnail"
+            />
+          </div>
         </div>
         <p class="main-visual-game-description">
           移動：WASDキー スライディング：Fキー ジャンプ：Spaceキー
@@ -59,66 +94,75 @@
       </div>
       <div class="main-visual-red-triangles"></div>
       <section class="content">
-        <div>
-          <div class="content-container">
-            <img
-              src="TemplateData/content-container.png"
-              alt=""
-              width="1440"
-              height="1026"
-              class="content-container-image"
-            />
-            <div class="content-box">
-              <h1 class="content-title">
+        <div class="content-container">
+          <img
+            src="TemplateData/content-container.png"
+            alt=""
+            width="1440"
+            height="1026"
+            class="content-container-image"
+          />
+          <div class="content-box">
+            <h1 class="content-title">
+              <picture>
+                <source
+                  srcset="TemplateData/content-title_small.png"
+                  media="(max-width: 700px)"
+                  width="247"
+                  height="76"
+                />
                 <img
                   src="TemplateData/content-title.png"
                   alt="チェイスタグとは"
+                  decoding="async"
+                  width="499"
+                  height="74"
                 />
-              </h1>
-              <h2 class="content-message">
-                障害物だらけの専用コートで行う、20秒勝負の“本気”の1対1鬼ごっこ競技。
-              </h2>
-              <div class="content-bottom">
-                <img
-                  src="TemplateData/content-image.png"
-                  alt=""
-                  class="content-image"
-                />
-                <dl class="content-descriptions">
-                  <div>
-                    <dt class="content-description-title">フィールド</dt>
-                    <dd>
-                      <ul class="content-description-detail-list">
-                        <li>8m×8m の「クアッド」と呼ばれる障害物コート</li>
-                      </ul>
-                    </dd>
-                  </div>
-                  <div>
-                    <dt class="content-description-title">
-                      ルール (シングルサドンデスチェイスオフ)
-                    </dt>
-                    <dd>
-                      <ul class="content-description-detail-list">
-                        <li>
-                          鬼<span
-                            class="content-description-detail-list-small-text"
-                          >
-                            (チェイサーという)</span
-                          >
-                          と子
-                          <span
-                            class="content-description-detail-list-small-text"
-                            >(イヴェイダーという) </span
-                          >の1対1
-                        </li>
-                        <li>20秒の間、2人がクアッド内で鬼ごっこ</li>
-                        <li>タッチ(タグという)されたら、鬼と子を入れ替え</li>
-                        <li>逃げ切った秒数の多い方が勝ち</li>
-                      </ul>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
+              </picture>
+            </h1>
+            <h2 class="content-message">
+              <span> 障害物だらけの専用コートで行う、</span
+              ><br class="u-small-only" />20秒勝負の“本気”の1対1鬼ごっこ競技。
+            </h2>
+            <div class="content-bottom">
+              <img
+                src="TemplateData/content-image.png"
+                alt=""
+                class="content-image"
+              />
+              <dl class="content-descriptions">
+                <div>
+                  <dt class="content-description-title">フィールド：</dt>
+                  <dd>
+                    <ul class="content-description-detail-list">
+                      <li>8m×8m の「クアッド」と呼ばれる障害物コート</li>
+                    </ul>
+                  </dd>
+                </div>
+                <div>
+                  <dt class="content-description-title">
+                    ルール (シングルサドンデスチェイスオフ)：
+                  </dt>
+                  <dd>
+                    <ul class="content-description-detail-list">
+                      <li>
+                        鬼<span
+                          class="content-description-detail-list-small-text"
+                        >
+                          (チェイサーという)</span
+                        >
+                        と子
+                        <span class="content-description-detail-list-small-text"
+                          >(イヴェイダーという) </span
+                        >の1対1
+                      </li>
+                      <li>20秒の間、2人がクアッド内で鬼ごっこ</li>
+                      <li>タッチ(タグという)されたら、鬼と子を入れ替え</li>
+                      <li>逃げ切った秒数の多い方が勝ち</li>
+                    </ul>
+                  </dd>
+                </div>
+              </dl>
             </div>
           </div>
         </div>
@@ -126,77 +170,11 @@
     </main>
     <footer>
       <img
-        src="./TemplateData/copyright.png"
+        src="TemplateData/copyright.png"
         alt="©COPYRIGHT GAORA INC."
         class="copy-right"
       />
     </footer>
-    <script>
-      const fullscreenButton = document.getElementById("fullscreen-button");
-      const gameIframe = document.getElementById("game-iframe");
-
-      // iframeにフォーカスを当てる共通関数
-      const focusIframe = () => {
-        setTimeout(() => {
-          gameIframe.focus();
-          try {
-            if (gameIframe.contentWindow) {
-              gameIframe.contentWindow.focus();
-            }
-          } catch (e) {
-            // クロスオリジンの場合はエラーになるが、無視
-          }
-        }, 100);
-      };
-
-      // 全画面表示をリクエストする共通関数
-      const requestFullscreen = async (element) => {
-        if (element.requestFullscreen) {
-          return await element.requestFullscreen();
-        } else if (element.webkitRequestFullscreen) {
-          return await element.webkitRequestFullscreen();
-        } else if (element.mozRequestFullScreen) {
-          return await element.mozRequestFullScreen();
-        } else if (element.msRequestFullscreen) {
-          return await element.msRequestFullscreen();
-        }
-      };
-
-      // 現在の全画面要素を取得する共通関数
-      const getFullscreenElement = () => {
-        return (
-          document.fullscreenElement ||
-          document.webkitFullscreenElement ||
-          document.mozFullScreenElement ||
-          document.msFullscreenElement
-        );
-      };
-
-      // 全画面表示ボタンのイベントリスナー
-      fullscreenButton.addEventListener("click", async () => {
-        try {
-          await requestFullscreen(gameIframe);
-          focusIframe();
-        } catch (error) {
-          console.error("全画面表示に失敗しました:", error);
-        }
-      });
-
-      // 全画面変更イベントの共通ハンドラー
-      const handleFullscreenChange = () => {
-        if (getFullscreenElement() === gameIframe) {
-          focusIframe();
-        }
-      };
-
-      // 各ブラウザ用の全画面変更イベントリスナー
-      document.addEventListener("fullscreenchange", handleFullscreenChange);
-      document.addEventListener(
-        "webkitfullscreenchange",
-        handleFullscreenChange
-      );
-      document.addEventListener("mozfullscreenchange", handleFullscreenChange);
-      document.addEventListener("MSFullscreenChange", handleFullscreenChange);
-    </script>
+    <script src="TemplateData/top.js"></script>
   </body>
 </html>

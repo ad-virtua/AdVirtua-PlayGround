@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex,nofollow" />
     <title>Unity Web Player | ChaseTag</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico" />
-    <link rel="stylesheet" href="TemplateData/style.css" />
+    <link rel="stylesheet" href="TemplateData/game.css" />
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
@@ -70,6 +70,59 @@
         // },
       };
 
+      // パスワード保護
+      const PASSWORD = "gaora2025"; // ここを任意のパスワードに変更してください
+      const MAX_ATTEMPTS = 3;
+
+      function checkPassword() {
+        let attempts = 0;
+        while (attempts < MAX_ATTEMPTS) {
+          const input = prompt("パスワードを入力してください:");
+          if (input === null) {
+            // キャンセルされた場合
+            alert("アクセスが拒否されました");
+            return false;
+          }
+          if (input === PASSWORD) {
+            return true;
+          }
+          attempts++;
+          if (attempts < MAX_ATTEMPTS) {
+            alert(
+              "パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回"
+            );
+          }
+        }
+        alert("アクセスが拒否されました");
+        return false;
+      }
+
+      function mainProcess() {
+        document.querySelector("#unity-loading-bar").style.display = "block";
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+          createUnityInstance(canvas, config, (progress) => {
+            document.querySelector("#unity-progress-bar-full").style.width =
+              100 * progress + "%";
+          })
+            .then((unityInstance) => {
+              document.querySelector("#unity-progress-bar-full").style.width =
+                "100%";
+              setTimeout(() => {
+                document.querySelector("#unity-loading-bar").style.display =
+                  "none";
+              }, 500);
+            })
+            .catch((message) => {
+              alert(message);
+            });
+        };
+
+        document.body.appendChild(script);
+      }
+
       // By default, Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
       // Set this to false if you want to decouple this synchronization from
@@ -107,60 +160,11 @@
         var rect = container.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
-      }
 
-      // パスワード保護
-      const PASSWORD = "gaora2025"; // ここを任意のパスワードに変更してください
-      const MAX_ATTEMPTS = 3;
-
-      function checkPassword() {
-        let attempts = 0;
-        while (attempts < MAX_ATTEMPTS) {
-          const input = prompt("パスワードを入力してください:");
-          if (input === null) {
-            // キャンセルされた場合
-            alert("アクセスが拒否されました");
-            return false;
-          }
-          if (input === PASSWORD) {
-            return true;
-          }
-          attempts++;
-          if (attempts < MAX_ATTEMPTS) {
-            alert(
-              "パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回"
-            );
-          }
+        // パスワード認証成功後のみUnityをロード
+        if (checkPassword()) {
+          mainProcess();
         }
-        alert("アクセスが拒否されました");
-        return false;
-      }
-
-      // パスワード認証成功後のみUnityをロード
-      if (checkPassword()) {
-        document.querySelector("#unity-loading-bar").style.display = "block";
-
-        var script = document.createElement("script");
-        script.src = loaderUrl;
-        script.onload = () => {
-          createUnityInstance(canvas, config, (progress) => {
-            document.querySelector("#unity-progress-bar-full").style.width =
-              100 * progress + "%";
-          })
-            .then((unityInstance) => {
-              document.querySelector("#unity-progress-bar-full").style.width =
-                "100%";
-              setTimeout(() => {
-                document.querySelector("#unity-loading-bar").style.display =
-                  "none";
-              }, 500);
-            })
-            .catch((message) => {
-              alert(message);
-            });
-        };
-
-        document.body.appendChild(script);
       }
 
       // 親ページの全画面表示を操作する関数
@@ -195,6 +199,15 @@
             }
           } catch (e) {
             // クロスオリジンの場合はエラーになるが、無視
+          }
+        }
+      });
+      // iframeにpostMessageを受信
+      window.addEventListener("message", (event) => {
+        if (event.data.type === "gameStart") {
+          // ゲームスタート
+          if (checkPassword()) {
+            mainProcess();
           }
         }
       });
