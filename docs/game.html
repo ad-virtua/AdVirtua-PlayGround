@@ -160,11 +160,11 @@
         var rect = container.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
+      }
 
-        // パスワード認証成功後のみUnityをロード
-        if (checkPassword()) {
-          mainProcess();
-        }
+      // パスワード認証成功後のみUnityをロード
+      if (checkPassword()) {
+        mainProcess();
       }
 
       // 親ページの全画面表示を操作する関数
@@ -199,15 +199,6 @@
             }
           } catch (e) {
             // クロスオリジンの場合はエラーになるが、無視
-          }
-        }
-      });
-      // iframeにpostMessageを受信
-      window.addEventListener("message", (event) => {
-        if (event.data.type === "gameStart") {
-          // ゲームスタート
-          if (checkPassword()) {
-            mainProcess();
           }
         }
       });
