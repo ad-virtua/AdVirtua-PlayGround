@@ -120,7 +120,8 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 226px;
+  min-width: 226px;
+  white-space: nowrap;
   height: 60px;
   -webkit-appearance: none;
      -moz-appearance: none;
