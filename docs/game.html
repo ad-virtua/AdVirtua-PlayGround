@@ -12,15 +12,21 @@
         padding: 8px 12px;
         text-align: center;
         font-size: 14px;
-        color: #ffffff;
+        color: #ffffff; /* 横に余白がないときの文字色。横余白時は JS で transparent にする */
         font-weight: bold;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
       }
+
+      /* 下側の余白用。高さは JS で notice と同じにする */
+      #unity-bottom-space {
+        width: 100%;
+        height: 0;
+      }
     </style>
   </head>
   <body>
-    <!-- 上部の注意書き -->
+    <!-- 上部の注意書き（横に余白が出ているときは文字だけ非表示にする） -->
     <div class="orientation-notice">
       スマートフォンを縦に持っている場合、横に持ってプレイすることをオススメします。
     </div>
@@ -41,8 +47,12 @@
       <div id="unity-warning"></div>
     </div>
 
+    <!-- 下側の余白（上の notice と同じ高さにする） -->
+    <div id="unity-bottom-space"></div>
+
     <script>
       var canvas = document.querySelector("#unity-canvas");
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
       // Unity からの警告やエラーを表示するバナー
       function unityShowBanner(msg, type) {
@@ -108,35 +118,58 @@
       }
 
       // 画面サイズに応じてキャンバスサイズを調整
-      // 16:9 を維持しつつ、縦か横のどちらか一方が必ずフルスクリーンになる
+      // 16:9 を維持しつつ、上下に同じ余白（上: notice、下: bottom-space）を確保
+      // さらに「横に余白が出ているモバイル時」は上部の文字だけ非表示にする
       function setCanvasSize() {
         var viewportWidth =
           window.innerWidth || document.documentElement.clientWidth || 0;
         var viewportHeight =
           window.innerHeight || document.documentElement.clientHeight || 0;
 
-        // 上部の注意書き分を引いておく（スクロール防止）
         var notice = document.querySelector(".orientation-notice");
+        var bottomSpace = document.getElementById("unity-bottom-space");
+
+        var noticeHeight = 0;
         if (notice) {
-          viewportHeight -= notice.offsetHeight || 0;
-          if (viewportHeight < 0) viewportHeight = 0;
+          noticeHeight = notice.offsetHeight || 0;
         }
 
-        if (!viewportWidth || !viewportHeight) return;
+        // 下側の余白を上と同じ高さにする
+        if (bottomSpace) {
+          bottomSpace.style.height = noticeHeight + "px";
+        }
+
+        // 実際に 16:9 キャンバスを置ける高さ
+        var availableHeight = viewportHeight - noticeHeight * 2;
+        if (availableHeight < 0) availableHeight = 0;
+
+        if (!viewportWidth || !availableHeight) return;
 
         var targetRatio = 16 / 9;
-        var viewRatio = viewportWidth / viewportHeight;
+        var viewRatio = viewportWidth / availableHeight;
 
         var width, height;
+        var hasHorizontalLetterbox = false;
 
         if (viewRatio > targetRatio) {
-          // 画面の方が横に広い → 高さをフルスクリーン、幅を 16:9 に合わせる（左右に余白）
-          height = viewportHeight;
+          // 画面の方が横に広い → availableHeight に合わせて高さを決め、幅を 16:9 にする（左右に余白）
+          height = availableHeight;
           width = height * targetRatio;
+          hasHorizontalLetterbox = true;
         } else {
-          // 画面の方が縦に長い or 同じ → 幅をフルスクリーン、高さを 16:9 に合わせる（上下に余白）
+          // 画面の方が縦に長い or 同じ → 幅をフルスクリーン、高さを 16:9 にする（上下に余白が増える場合あり）
           width = viewportWidth;
           height = width / targetRatio;
+          hasHorizontalLetterbox = false;
+        }
+
+        // モバイルかつ横に余白が出ているときは注意書きの文字だけ消す
+        if (notice) {
+          if (isMobile && hasHorizontalLetterbox) {
+            notice.style.color = "transparent";
+          } else {
+            notice.style.color = "#ffffff";
+          }
         }
 
         var container = document.getElementById("unity-container");
@@ -154,7 +187,7 @@
       }
 
       // モバイル端末用の viewport 設定だけを行う（レイアウトは共通）
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      if (isMobile) {
         var meta = document.createElement("meta");
         meta.name = "viewport";
         meta.content =
