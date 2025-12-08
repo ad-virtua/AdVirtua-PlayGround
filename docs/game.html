@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Unity Web Player | ChaseTag</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <!-- <link rel="shortcut icon" href="TemplateData/favicon.ico" /> -->
     <link rel="stylesheet" href="TemplateData/game.css" />
   </head>
   <body>
@@ -160,11 +160,11 @@
         var rect = container.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
+      }
 
-        // パスワード認証成功後のみUnityをロード
-        if (checkPassword()) {
-          mainProcess();
-        }
+      // パスワード認証成功後のみUnityをロード
+      if (checkPassword()) {
+        mainProcess();
       }
 
       // 親ページの全画面表示を操作する関数
@@ -199,15 +199,6 @@
             }
           } catch (e) {
             // クロスオリジンの場合はエラーになるが、無視
-          }
-        }
-      });
-      // iframeにpostMessageを受信
-      window.addEventListener("message", (event) => {
-        if (event.data.type === "gameStart") {
-          // ゲームスタート
-          if (checkPassword()) {
-            mainProcess();
           }
         }
       });

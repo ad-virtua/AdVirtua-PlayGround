@@ -5,8 +5,11 @@ const startButton = document.getElementById("start-button");
 
 if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
   gameStartContainer.style.display = "block";
+} else {
+  if (gameIframe) {
+    gameIframe.src = "game.html";
+  }
 }
-
 // iframeにフォーカスを当てる共通関数
 const focusIframe = () => {
   setTimeout(() => {
@@ -69,13 +72,5 @@ fullscreenButton.addEventListener("click", async () => {
 
 // スタートボタンのイベントリスナー
 startButton.addEventListener("click", async () => {
-  gameIframe.contentWindow.postMessage({ type: "gameStart" }, "*");
-  gameStartContainer.style.display = "none";
-  try {
-    await requestFullscreen(gameIframe);
-    focusIframe();
-    fullscreenButton.style.display = "flex";
-  } catch (error) {
-    console.error("全画面表示に失敗しました:", error);
-  }
+  location.href = "game.html";
 });
