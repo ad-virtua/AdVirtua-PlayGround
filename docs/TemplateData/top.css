@@ -20,6 +20,10 @@ button:hover {
   opacity: 0.9;
 }
 
+button {
+  font-family: "Zen Maru Gothic", sans-serif;
+}
+
 a:focus-visible {
   outline: 1px solid;
 }
