@@ -25,11 +25,11 @@
       スマートフォンを縦に持っている場合、横に持ってプレイすることをオススメします。
     </div>
 
-    <!-- Unity 用コンテナ（横幅は常に画面いっぱいにする） -->
+    <!-- Unity 用コンテナ -->
     <div
       id="unity-container"
       class="unity-desktop"
-      style="margin: 0; padding: 0; width: 100%;"
+      style="margin: 0 auto; padding: 0;"
     >
       <canvas id="unity-canvas" tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -108,20 +108,43 @@
       }
 
       // 画面サイズに応じてキャンバスサイズを調整
-      // 横幅は常に viewport を埋め尽くし、縦は 16:9 比率にする
+      // 16:9 を維持しつつ、縦か横のどちらか一方が必ずフルスクリーンになる
       function setCanvasSize() {
         var viewportWidth =
           window.innerWidth || document.documentElement.clientWidth || 0;
+        var viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight || 0;
 
-        if (!viewportWidth) return;
+        // 上部の注意書き分を引いておく（スクロール防止）
+        var notice = document.querySelector(".orientation-notice");
+        if (notice) {
+          viewportHeight -= notice.offsetHeight || 0;
+          if (viewportHeight < 0) viewportHeight = 0;
+        }
 
-        var width = viewportWidth;
-        var height = (width * 9) / 16; // 16:9
+        if (!viewportWidth || !viewportHeight) return;
+
+        var targetRatio = 16 / 9;
+        var viewRatio = viewportWidth / viewportHeight;
+
+        var width, height;
+
+        if (viewRatio > targetRatio) {
+          // 画面の方が横に広い → 高さをフルスクリーン、幅を 16:9 に合わせる（左右に余白）
+          height = viewportHeight;
+          width = height * targetRatio;
+        } else {
+          // 画面の方が縦に長い or 同じ → 幅をフルスクリーン、高さを 16:9 に合わせる（上下に余白）
+          width = viewportWidth;
+          height = width / targetRatio;
+        }
 
         var container = document.getElementById("unity-container");
         if (container) {
           container.style.width = width + "px";
           container.style.height = height + "px";
+          container.style.marginLeft = "auto";
+          container.style.marginRight = "auto";
         }
 
         canvas.style.width = width + "px";
