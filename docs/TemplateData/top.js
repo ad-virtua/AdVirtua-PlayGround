@@ -7,7 +7,7 @@ if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
   gameStartContainer.style.display = "block";
 } else {
   if (gameIframe) {
-    gameIframe.src = "game.html";
+    gameIframe.src = "game-iframe.html";
   }
 }
 // iframeにフォーカスを当てる共通関数
