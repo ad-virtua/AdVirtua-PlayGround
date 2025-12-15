@@ -1,4 +1,5 @@
 const gameIframe = document.getElementById("game-iframe");
+const gameIframeWrapper = document.getElementById("game-iframe-wrapper");
 const gameStartContainer = document.getElementById("game-start-container");
 const fullscreenButton = document.getElementById("fullscreen-button");
 const startButton = document.getElementById("start-button");
@@ -49,7 +50,7 @@ const getFullscreenElement = () => {
 
 // 全画面変更イベントの共通ハンドラー
 const handleFullscreenChange = () => {
-  if (getFullscreenElement() === gameIframe) {
+  if (getFullscreenElement() === gameIframeWrapper) {
     focusIframe();
   }
 };
@@ -63,7 +64,7 @@ document.addEventListener("MSFullscreenChange", handleFullscreenChange);
 // 全画面表示ボタンのイベントリスナー
 fullscreenButton.addEventListener("click", async () => {
   try {
-    await requestFullscreen(gameIframe);
+    await requestFullscreen(gameIframeWrapper);
     focusIframe();
   } catch (error) {
     console.error("全画面表示に失敗しました:", error);
@@ -74,3 +75,30 @@ fullscreenButton.addEventListener("click", async () => {
 startButton.addEventListener("click", async () => {
   location.href = "game.html";
 });
+
+// iframeのサイズを16:9に調整する関数
+const resizeIframe = () => {
+  const wrapperWidth = gameIframeWrapper.clientWidth;
+  const wrapperHeight = gameIframeWrapper.clientHeight;
+  if ((wrapperWidth * 9) / 16 > wrapperHeight) {
+    // 高さが制約になる場合
+    gameIframe.style.width = (wrapperHeight * 16) / 9 + "px";
+    gameIframe.style.height = wrapperHeight + "px";
+  } else {
+    // 幅が制約になる場合
+    gameIframe.style.width = wrapperWidth + "px";
+    gameIframe.style.height = (wrapperWidth * 9) / 16 + "px";
+  }
+};
+
+// ResizeObserverでwrapperのサイズ変更を監視
+const resizeObserver = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    resizeIframe();
+  }
+});
+
+resizeObserver.observe(gameIframeWrapper);
+
+// 初回実行
+resizeIframe();
