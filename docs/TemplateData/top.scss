@@ -341,6 +341,7 @@ main {
   width: calc(365 * 100 / 63 / 1440 * 100%);
   max-width: 365px;
   flex-shrink: 0;
+  border-radius: 8px;
   @media (max-width: 700px) {
     width: 100%;
   }
