@@ -153,7 +153,7 @@
 
         if (viewRatio > targetRatio) {
           // 画面の方が横に広い → availableHeight に合わせて高さを決め、幅を 16:9 にする（左右に余白）
-          height = availableHeight;
+          height = viewportHeight;
           width = height * targetRatio;
           hasHorizontalLetterbox = true;
         } else {
