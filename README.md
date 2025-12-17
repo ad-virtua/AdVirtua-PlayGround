@@ -1,2 +1,9 @@
 # AdVirtua-PlayGround
-WebGLビルド確認用
+
+WebGL ビルド確認用
+
+### デプロイコマンド
+
+```bash
+ firebase deploy --only hosting:ad-virtua-playground
+```

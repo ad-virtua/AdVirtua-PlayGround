@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "site": "ad-virtua-playground",
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}
