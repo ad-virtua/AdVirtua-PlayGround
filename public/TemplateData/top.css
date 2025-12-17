@@ -467,4 +467,122 @@ main {
   width: -moz-fit-content;
   width: fit-content;
   margin: 8px auto;
+}
+
+.license-button {
+  display: block;
+  margin: 16px auto 8px;
+  padding: 8px 24px;
+  background-color: #e60012;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.license-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.license-modal-overlay.is-open {
+  display: flex;
+}
+
+.license-modal {
+  position: relative;
+  background-color: white;
+  padding: 32px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.license-modal h2 {
+  color: #e60012;
+  font-size: 18px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+.license-modal p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+}
+
+.license-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background-color: #e60012;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s;
+}
+
+.license-modal-title {
+  color: #e60012;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.license-modal-credit-list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.license-modal-credit-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+.license-modal-credit-item dt {
+  font-size: 12px;
+  color: #666;
+  flex-shrink: 0;
+  min-width: 180px;
+}
+@media (max-width: 500px) {
+  .license-modal-credit-item dt {
+    min-width: auto;
+  }
+}
+.license-modal-credit-item dd {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  font-weight: bold;
+}
+@media (max-width: 500px) {
+  .license-modal-credit-item {
+    flex-direction: column;
+    gap: 2px;
+  }
 }/*# sourceMappingURL=top.css.map */

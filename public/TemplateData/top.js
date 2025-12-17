@@ -102,3 +102,36 @@ resizeObserver.observe(gameIframeWrapper);
 
 // 初回実行
 resizeIframe();
+
+// モーダル関連の要素
+const licenseButton = document.getElementById("license-button");
+const licenseModalOverlay = document.getElementById("license-modal-overlay");
+const licenseModalClose = document.getElementById("license-modal-close");
+const licenseModal = document.getElementById("license-modal");
+
+// モーダルを開く
+licenseButton.addEventListener("click", () => {
+  licenseModalOverlay.classList.add("is-open");
+});
+
+// モーダルを閉じる関数
+const closeModal = () => {
+  licenseModalOverlay.classList.remove("is-open");
+};
+
+// 閉じるボタンでモーダルを閉じる
+licenseModalClose.addEventListener("click", closeModal);
+
+// オーバーレイクリックでモーダルを閉じる
+licenseModalOverlay.addEventListener("click", (e) => {
+  if (e.target === licenseModalOverlay) {
+    closeModal();
+  }
+});
+
+// Escキーでモーダルを閉じる
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && licenseModalOverlay.classList.contains("is-open")) {
+    closeModal();
+  }
+});
