@@ -70,33 +70,6 @@
         // },
       };
 
-      // パスワード保護
-      const PASSWORD = "gaora2025"; // ここを任意のパスワードに変更してください
-      const MAX_ATTEMPTS = 3;
-
-      function checkPassword() {
-        let attempts = 0;
-        while (attempts < MAX_ATTEMPTS) {
-          const input = prompt("パスワードを入力してください:");
-          if (input === null) {
-            // キャンセルされた場合
-            alert("アクセスが拒否されました");
-            return false;
-          }
-          if (input === PASSWORD) {
-            return true;
-          }
-          attempts++;
-          if (attempts < MAX_ATTEMPTS) {
-            alert(
-              "パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回"
-            );
-          }
-        }
-        alert("アクセスが拒否されました");
-        return false;
-      }
-
       function mainProcess() {
         document.querySelector("#unity-loading-bar").style.display = "block";
 
@@ -162,10 +135,7 @@
         canvas.height = rect.height;
       }
 
-      // パスワード認証成功後のみUnityをロード
-      if (checkPassword()) {
-        mainProcess();
-      }
+      mainProcess();
 
       // 親ページの全画面表示を操作する関数
       const exitParentFullscreen = async () => {
