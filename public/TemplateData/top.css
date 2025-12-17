@@ -538,6 +538,11 @@ main {
   justify-content: center;
   align-items: center;
   transition: opacity 0.2s;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  padding: 0;
+  aspect-ratio: 1/1;
 }
 
 .license-modal-title {
