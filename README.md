@@ -2,7 +2,11 @@
 
 WebGL ビルド確認用
 
-### デプロイコマンド
+### デプロイ手順
+
+```bash
+ firebase login
+```
 
 ```bash
  firebase deploy --only hosting:ad-virtua-playground
