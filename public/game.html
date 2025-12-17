@@ -35,7 +35,7 @@
     <div
       id="unity-container"
       class="unity-desktop"
-      style="margin: 0 auto; padding: 0;"
+      style="margin: 0 auto; padding: 0"
     >
       <canvas id="unity-canvas" tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -90,32 +90,6 @@
         productVersion: "0.1.0",
         showBanner: unityShowBanner,
       };
-
-      // パスワード保護
-      const PASSWORD = "gaora2025"; // 必要に応じて変更
-      const MAX_ATTEMPTS = 3;
-
-      function checkPassword() {
-        let attempts = 0;
-        while (attempts < MAX_ATTEMPTS) {
-          const input = prompt("パスワードを入力してください:");
-          if (input === null) {
-            alert("アクセスが拒否されました");
-            return false;
-          }
-          if (input === PASSWORD) {
-            return true;
-          }
-          attempts++;
-          if (attempts < MAX_ATTEMPTS) {
-            alert(
-              "パスワードが違います。残り" + (MAX_ATTEMPTS - attempts) + "回"
-            );
-          }
-        }
-        alert("アクセスが拒否されました");
-        return false;
-      }
 
       // 画面サイズに応じてキャンバスサイズを調整
       // 16:9 を維持しつつ、上下に同じ余白（上: notice、下: bottom-space）を確保
@@ -227,10 +201,7 @@
         document.body.appendChild(script);
       }
 
-      // パスワード認証成功後のみ Unity をロード
-      if (checkPassword()) {
-        mainProcess();
-      }
+      mainProcess();
 
       // 親ページの全画面表示を操作する関数
       const exitParentFullscreen = async () => {
