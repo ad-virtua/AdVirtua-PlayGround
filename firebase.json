@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "ad-virtua-playground",
+    "site": "gaora-chasetag-battle",
     "public": "public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }

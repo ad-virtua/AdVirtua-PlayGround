@@ -9,5 +9,5 @@ WebGL ビルド確認用
 ```
 
 ```bash
- firebase deploy --only hosting:ad-virtua-playground
+ firebase deploy --only hosting:gaora-chasetag-battle
 ```
