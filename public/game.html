@@ -77,20 +77,6 @@
         updateBannerVisibility();
       }
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Pre.loader.js";
-      var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/Pre.data",
-        frameworkUrl: buildUrl + "/Pre.framework.js",
-        codeUrl: buildUrl + "/Pre.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "YGTCreate",
-        productName: "ChaseTag",
-        productVersion: "0.1.0",
-        showBanner: unityShowBanner,
-      };
-
       // 画面サイズに応じてキャンバスサイズを調整
       // 16:9 を維持しつつ、上下に同じ余白（上: notice、下: bottom-space）を確保
       // さらに「横に余白が出ているモバイル時」は上部の文字だけ非表示にする
@@ -172,10 +158,23 @@
       window.addEventListener("resize", setCanvasSize);
       setCanvasSize();
 
-      // Unity 側にもキャンバスサイズに追従させる
-      config.matchWebGLToCanvasSize = true;
+      function initGame(buildUrl, filePrefix) {
+        var loaderUrl = buildUrl + "/" + filePrefix + ".loader.js";
+        var config = {
+          arguments: [],
+          dataUrl: buildUrl + "/" + filePrefix + ".data",
+          frameworkUrl: buildUrl + "/" + filePrefix + ".framework.js",
+          codeUrl: buildUrl + "/" + filePrefix + ".wasm",
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "YGTCreate",
+          productName: "ChaseTag",
+          productVersion: "0.1.0",
+          showBanner: unityShowBanner,
+        };
 
-      function mainProcess() {
+        // Unity 側にもキャンバスサイズに追従させる
+        config.matchWebGLToCanvasSize = true;
+
         document.querySelector("#unity-loading-bar").style.display = "block";
 
         var script = document.createElement("script");
@@ -201,7 +200,19 @@
         document.body.appendChild(script);
       }
 
-      mainProcess();
+      // build-config.json から読み込むビルドフォルダを動的に決定
+      fetch("build-config.json")
+        .then(function (r) { return r.json(); })
+        .then(function (buildConfig) {
+          var buildUrl = buildConfig.buildFolder
+            ? "Build/" + buildConfig.buildFolder
+            : "Build";
+          initGame(buildUrl, buildConfig.buildFolder || "Pre");
+        })
+        .catch(function (err) {
+          console.error("build-config.json の読み込みに失敗:", err);
+          initGame("Build", "Pre");
+        });
 
       // 親ページの全画面表示を操作する関数
       const exitParentFullscreen = async () => {
